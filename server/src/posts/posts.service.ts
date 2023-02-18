@@ -11,22 +11,33 @@ export class PostsService {
         @InjectModel(Post.name) private postDocumentModel: Model<PostDocument>
     ) {}
 
+    async getPosts(page: number): Promise<Post[]> {
+        const limit = 5;
+
+        const posts = await this.postDocumentModel
+            .find()
+            .populate('author')
+            .sort({ created_at: -1 })
+            .skip(limit * (page-1))
+            .limit(limit);
+
+        return posts;
+    }
+
     async getPost(id: string): Promise<Post> {
-        const post = await this.postDocumentModel.findById(id);
+        const post = await this.postDocumentModel
+            .findByIdAndUpdate(id, {
+                $inc: { views: 1 }
+            })
+            .populate('author');
 
         if (!post) throw new BadRequestException('Пост не найден');
 
         return post;
     }
 
-    async getPosts(): Promise<Post[]> {
-        const posts = await this.postDocumentModel.find();
-
-        return posts;
-    }
-
-    async createPost(dto: PostDto): Promise<Post> {
-        const post = await this.postDocumentModel.create({ ...dto });
+    async createPost(dto: PostDto, author: string): Promise<Post> {
+        const post = await this.postDocumentModel.create({ ...dto, author });
 
         return post;
     }
@@ -44,7 +55,6 @@ export class PostsService {
             { new: true }
         );
 
-
         return updatedPost;
     }
 
@@ -56,5 +66,19 @@ export class PostsService {
         const deletedPost = await this.postDocumentModel.findByIdAndDelete(id);
 
         return deletedPost;
+    }
+
+    async searchByQuery(query: string): Promise<Post[]> {
+        const posts = await this.postDocumentModel.find({
+            title: { $regex: new RegExp(query, 'i') }
+        });
+
+        return posts;
+    }
+
+    async searchByCategory(category: string): Promise<Post[]> {
+        const posts = await this.postDocumentModel.find({ category });
+
+        return posts;
     }
 }

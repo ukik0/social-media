@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import * as mongoose from 'mongoose';
+import { HydratedDocument, ObjectId } from 'mongoose';
 
 export type PostDocument = HydratedDocument<Post>;
 
@@ -12,25 +13,28 @@ export class Post {
     description: string;
 
     @Prop({type: Number, default: 0})
-    views: 0;
+    views: number;
 
     @Prop({type: String, default: ''})
     imageUrl: string;
 
-    // @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], required: true })
-    // author: string;
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
+    author: ObjectId;
     //
-    // @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like' }], default: [] })
-    // likes: string[];
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like' }], default: [] })
+    likes: ObjectId[];
     //
-    // @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: [] }] })
-    // comments: string[];
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: [] }] })
+    comments: ObjectId[];
 
     @Prop({type: [String], default: []})
     tags: string[];
 
     @Prop({type: String, required: true})
     category: string;
+
+    @Prop({type: Date, default: Date.now()})
+    created_at: Date
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
