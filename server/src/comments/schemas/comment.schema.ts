@@ -12,8 +12,13 @@ export class Comment {
     @Prop({ type:  mongoose.Schema.Types.ObjectId, ref: 'User', required: true  })
     author: string
 
+    @Prop({type: String, required: true})
+    postId: string
+
     @Prop({type: Date, default: Date.now()})
     created_at: Date
+
+
 
     _id: string
 }

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Comment, CommentDocument } from './schemas/comment.schema';
@@ -14,18 +14,18 @@ export class CommentsService {
         @InjectModel(User.name) private userDocumentModel: Model<UserDocument>,
         @InjectModel(Post.name) private postDocumentModel: Model<PostDocument>
     ) {}
-    async createCommentToPost(
-        dto: CommentDto,
-        userId: string
-    ): Promise<Comment> {
+    async createComment(dto: CommentDto, userId: string): Promise<Comment> {
         const user = await this.userDocumentModel.findById(userId);
+        const post = await this.postDocumentModel.findById(dto.postId)
 
-        if (!dto.text)
-            throw new BadRequestException('Комментарий не может быть пусты');
+        if (!user) throw new UnauthorizedException('Пользователь не найден')
+
+        if (!dto.text || !post) throw new BadRequestException('Ошибка создания комментария');
 
         const comment = await this.commentDocumentModel.create({
             text: dto.text,
-            author: user
+            author: user,
+            postId: post._id
         });
 
         await comment.save();
@@ -37,7 +37,7 @@ export class CommentsService {
         return comment;
     }
 
-    async removeCommentFromPost(dto, userId: string, commentId): Promise<Post> {
+    async removeComment(dto, userId: string, commentId): Promise<Post> {
         const post = await this.postDocumentModel.findById(dto.postId);
         const comment = await this.commentDocumentModel.findById(commentId);
 
@@ -61,11 +61,11 @@ export class CommentsService {
 
         if (!post) throw new BadRequestException('Пост не найден');
 
-        const postComments = await Promise.all(
+        const postComments = (await Promise.all(
             post.comments.map((comment) =>
                 this.commentDocumentModel.findById(comment).populate('author')
             )
-        );
+        ));
 
         return postComments
     }

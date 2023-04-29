@@ -1,0 +1,58 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.likes {
+    @include pseudo {
+        right: 30px;
+        bottom: 30px;
+        font-weight: 500;
+        font-size: rem(18);
+        color: $gray-color;
+        transition: $transition;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        &:hover {
+            color: $text-color;
+        }
+
+        span {
+            font-size: rem(16);
+        }
+    }
+}
+
+.icon {
+    &.active {
+        color: red;
+    }
+}
+
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+}
+.spinner:after {
+    content: " ";
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid $gray-color;
+    border-color: $gray-color $gray-color $gray-color transparent;
+    animation: spinner 1s linear infinite;
+}
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

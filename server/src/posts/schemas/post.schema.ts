@@ -35,6 +35,7 @@ export class Post {
 
     @Prop({type: Date, default: Date.now()})
     created_at: Date
+    _id: string;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

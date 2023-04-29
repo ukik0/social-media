@@ -1,13 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/user.dto';
-import { RefreshTokenGuard } from '../auth/decorators/refreshToken.guard';
 import { Request } from 'express';
 import { AccessTokenGuard } from '../auth/decorators/accessToken.guard';
+import { PostDto } from '../posts/dto/post.dto';
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 
 @Controller('users')
+@ApiTags('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
+
+    @Get()
+    getUsers() {
+        return this.usersService.getUsers();
+    }
 
     @Post()
     create(@Body() dto: UserDto) {
@@ -15,62 +22,62 @@ export class UsersController {
     }
 
     @Get('/search')
-    searchUsersByQuery(@Query('query') query:string) {
+    searchUsersByQuery(@Query('query') query: string) {
         return this.usersService.searchUsersByQuery(query);
     }
 
-    @Get()
-    findAll() {
-        return this.usersService.findAll();
-    }
-
-    @UseGuards(RefreshTokenGuard)
-    @Get('/me')
-    findById(@Req() req: Request) {
-        return this.usersService.findById(req.user['userId']);
-    }
-
-    @Get('/friends/posts')
+    @Get('/followers')
     @UseGuards(AccessTokenGuard)
-    getPostsFromFriends(@Req() req: Request) {
-        return this.usersService.getPostsFromFriends(req.user['userId']);
+    @ApiBearerAuth()
+    getUserFollowers(@Req() req: Request) {
+        return this.usersService.getUserFollowers(req.user['userId']);
     }
 
-    @Get('/friends/:userId')
-    getUserFriends(@Param('userId') userId: string) {
-        return this.usersService.getUserFriends(userId);
+    @Get('/:id')
+    findById(@Param('id') id: string) {
+        return this.usersService.findById(id);
     }
 
-
+    @Get('/followers/posts')
     @UseGuards(AccessTokenGuard)
+    @ApiBearerAuth()
+    getPostsFromFollowers(@Req() req: Request) {
+        return this.usersService.getPostsFromFollowers(req.user['userId']);
+    }
+
     @Patch()
+    @UseGuards(AccessTokenGuard)
+    @ApiBearerAuth()
     update(@Req() req: Request, @Body() dto: UserDto) {
         return this.usersService.update(req.user['userId'], dto);
     }
 
-    @UseGuards(AccessTokenGuard)
-    @Delete()
-    remove(@Req() req: Request) {
-        return this.usersService.remove(req.user['userId']);
-    }
-
     @Get('/posts/:userId')
-    getUserPosts(@Param('userId') userId:string) {
-        return this.usersService.getUserPosts(userId);
+    getUserPosts(
+        @Param('userId') userId: string,
+        @Query('sortBy') sortBy: keyof PostDto,
+        @Query('sortValue') sortValue: 1 | -1
+    ) {
+        return this.usersService.getUserPosts(userId, sortBy, sortValue);
     }
 
+    @Post('/subscription/:subscriberId')
     @UseGuards(AccessTokenGuard)
-    @Post('/addFriend/:friendUserId')
-    addUserToFriend(@Req() req: Request, @Param('friendUserId') friendUserId: string) {
-        return this.usersService.addUserToFriend(req.user['userId'], friendUserId);
+    @ApiBearerAuth()
+    subscription(
+        @Req() req: Request,
+        @Param('subscriberId') subscriberId: string
+    ) {
+        return this.usersService.subscription(req.user['userId'], subscriberId);
     }
 
+    @Post('/unsubscribe/:subscriberId')
     @UseGuards(AccessTokenGuard)
-    @Post('/removeFriend/:friendUserId')
-    removeUserFromFriend(@Req() req: Request, @Param('friendUserId') friendUserId: string) {
-        return this.usersService.removeUserFromFriend(req.user['userId'], friendUserId);
+    @ApiBearerAuth()
+    unsubscribe(
+        @Req() req: Request,
+        @Param('subscriberId') subscriberId: string
+    ) {
+        return this.usersService.unsubscribe(req.user['userId'], subscriberId);
     }
-
-
-
 }

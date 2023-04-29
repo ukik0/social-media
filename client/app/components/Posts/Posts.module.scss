@@ -1,0 +1,21 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.posts {
+    flex: 2 0 auto;
+    max-width: 790px;
+    position: relative;
+
+    .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(#fff, 0.02);
+        border: $border;
+        box-shadow: 1px 1px 15px 5px rgba($bg-opacity-color, 0.03);
+        border-radius: 8px;
+        padding: 25px;
+        position: relative;
+    }
+
+}

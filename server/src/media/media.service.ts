@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { path } from 'app-root-path';
 import { ensureDir, writeFile } from 'fs-extra';
-import { IMediaInterface } from './media.interface';
+import {MediaDto} from "./dto/media.dto";
+import {ApiTags} from "@nestjs/swagger";
 
 
 @Injectable()
 export class MediaService {
-    async uploadMedia(mediaFile: Express.Multer.File): Promise<IMediaInterface> {
+    async uploadMedia(mediaFile: Express.Multer.File): Promise<MediaDto> {
         const uploadFolder = `${path}/uploads/`
         await ensureDir(uploadFolder)
 

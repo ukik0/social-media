@@ -49,8 +49,8 @@ export class LikesService {
         return updatedPost;
     }
 
-    async getLikesFromPost(id: string): Promise<User[]> {
-        const post = await this.postDocumentModel.findById(id);
+    async getLikesFromPost(postId: string): Promise<User[]> {
+        const post = await this.postDocumentModel.findById(postId);
 
         if (!post) throw new BadRequestException('Пост не найден');
 

@@ -1,0 +1,31 @@
+{
+    "trailingComma": "none",
+    "tabWidth": 4,
+    "useTabs": false,
+    "arrowParens": "always",
+    "semi": true,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "printWidth": 110,
+    "importOrder": [
+        "react",
+        "next/(.*)$",
+        "@/components",
+        "@/components/(.*)$",
+        "@/app/components/(.*)$",
+        "@/store",
+        "@/store/(.*)$",
+        "@/utils",
+        "@/utils/(.*)$",
+        "@/app/utils/(.*)$",
+        "@/pages",
+        "@/pages/(.*)$",
+        "@/app/pages/(.*)$",
+        "@/context",
+        "@/provider",
+        "classnames",
+        "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+}

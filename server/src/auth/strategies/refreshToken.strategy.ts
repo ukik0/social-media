@@ -5,20 +5,30 @@ import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class RefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
+export class RefreshTokenStrategy extends PassportStrategy(
+    Strategy,
+    'jwt-refresh'
+) {
     constructor(private readonly configService: ConfigService) {
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: ExtractJwt.fromExtractors([
+                (request: Request) => {
+                    let token = request.cookies?.refreshToken;
+
+                    if (!token) {
+                        return null;
+                    }
+
+                    return token;
+                }
+            ]),
             secretOrKey: configService.get('JWT_REFRESH_SECRET'),
             passReqToCallback: true
         });
     }
 
-    validate(req: Request, payload: any) {
-        const refreshToken = req
-            .get('Authorization')
-            .replace('Bearer', '')
-            .trim();
-        return { ...payload, refreshToken };
+
+    async validate(payload: any) {
+        return { ...payload };
     }
 }

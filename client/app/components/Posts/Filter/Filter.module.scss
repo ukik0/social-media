@@ -1,0 +1,41 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.date {
+    position: absolute;
+    right: 55px;
+    top: 15px;
+    transition: $transition;
+    opacity: 0;
+    visibility: hidden;
+
+    &.active{
+        animation: scaleIn 0.35s ease-in-out;
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $gray-color;
+    font-size: rem(22);
+    cursor: pointer;
+}
+
+@keyframes scaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

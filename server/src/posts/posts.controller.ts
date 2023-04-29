@@ -16,25 +16,33 @@ import { PostsService } from './posts.service';
 import { PostDto } from './dto/post.dto';
 import { AccessTokenGuard } from '../auth/decorators/accessToken.guard';
 import { Request } from 'express';
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 
 @Controller('posts')
+@ApiTags('posts')
 export class PostsController {
     constructor(private readonly postsService: PostsService) {}
 
     @Get()
     @UsePipes(new ValidationPipe())
-    getPosts(@Query('page') page: number) {
-        return this.postsService.getPosts(page);
+    getFilteredPosts(
+        @Query('page') page: number,
+        @Query('sortBy') sortBy: keyof PostDto,
+        @Query('sortValue') sortValue: 1 | -1,
+        @Query('start') start?: string,
+        @Query('end') end?: string,
+    ) {
+        return this.postsService.getFilteredPosts(page, sortBy, sortValue, start, end);
     }
 
     @Get('/search')
-    searchByQuery(@Query('query') query: string) {
-        return this.postsService.searchByQuery(query)
+    searchPostByQuery(@Query('query') query: string) {
+        return this.postsService.searchPostByQuery(query);
     }
 
     @Get('/category/:category')
-    searchByCategory(@Param('category') category: string) {
-        return this.postsService.searchByCategory(category)
+    searchPostByCategory(@Param('category') category: string) {
+        return this.postsService.searchPostByCategory(category);
     }
 
     @Get('/:id')
@@ -46,6 +54,7 @@ export class PostsController {
     @Post()
     @UsePipes(new ValidationPipe())
     @UseGuards(AccessTokenGuard)
+    @ApiBearerAuth()
     create(@Body() dto: PostDto, @Req() req: Request) {
         return this.postsService.createPost(dto, req.user['userId']);
     }
@@ -53,6 +62,7 @@ export class PostsController {
     @Patch('/:id')
     @UsePipes(new ValidationPipe())
     @UseGuards(AccessTokenGuard)
+    @ApiBearerAuth()
     updatePost(@Body() dto: PostDto, @Param('id') id: string) {
         return this.postsService.updatePost(id, dto);
     }
@@ -60,6 +70,7 @@ export class PostsController {
     @Delete('/:id')
     @UsePipes(new ValidationPipe())
     @UseGuards(AccessTokenGuard)
+    @ApiBearerAuth()
     deletePost(@Param('id') id: string) {
         return this.postsService.deletePost(id);
     }

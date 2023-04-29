@@ -1,0 +1,32 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.profile {
+    position: relative;
+    margin: 70px 0;
+
+    .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(#fff, 0.02);
+        border: $border;
+        box-shadow: 1px 1px 15px 5px rgba($bg-opacity-color, 0.03);
+        border-radius: 8px;
+        padding: 25px;
+        position: relative;
+    }
+
+    &__content {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        justify-content: space-between;
+        
+        .sticky{
+            position: sticky;
+            top: -30px;
+            flex: 1 0 350px;
+        }
+    }
+}

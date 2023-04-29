@@ -1,0 +1,44 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.title-1 {
+    font-weight: 700;
+    font-size: rem(25);
+    color: $text-color;
+}
+
+.title-2 {
+    @extend .title-1;
+    font-size: rem(20);
+}
+
+.description-1 {
+    font-weight: 700;
+    font-size: rem(15);
+    line-height: 25px;
+    color: $gray-color;
+}
+
+.description-2 {
+    @extend .description-1;
+    font-width: 500;
+    font-size: rem(12);
+}
+
+.sub-title-1 {
+    font-weight: 700;
+    font-size: rem(14);
+    color: $gray-color;
+}
+
+.sub-title-2 {
+    @extend .sub-title-1;
+    font-weight: 500;
+    font-size: rem(12);
+}
+
+.error {
+    font-size: rem(12);
+    font-weight: 700;
+    color: #a45a5a;
+}

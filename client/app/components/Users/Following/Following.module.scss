@@ -1,0 +1,57 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+    border: $border;
+    border-radius: 50%;
+    font-size: rem(20);
+    cursor: pointer;
+    background: $bg-opacity-color;
+    color: $text-color;
+    opacity: 1;
+    transition: $transition;
+
+    &.active {
+        opacity: 0.5;
+    }
+
+    &.loading {
+        opacity: 0;
+    }
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+}
+.spinner:after {
+    content: " ";
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid $gray-color;
+    border-color: $gray-color $gray-color $gray-color transparent;
+    animation: spinner 1s linear infinite;
+}
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

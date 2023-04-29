@@ -1,0 +1,75 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.list {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+    position: absolute;
+    width: 200px;
+    left: -17px;
+    padding: 75px 0 30px 20px;
+    border-radius: 8px;
+    top: -30px;
+    z-index: -1;
+    background: rgba($bg-color, 1);
+    box-shadow: 0px 0px 5px 1px rgba($bg-opacity-color, 0.05);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    transition: $transition;
+    will-change: backdrop-filter;
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        transition: $transition;
+
+        &:hover {
+            &.wrapper {
+                &::after {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &::after {
+            transition: $transition;
+
+            @include pseudo {
+                height: 100%;
+                width: 2px;
+                left: -10px;
+                background: $text-color;
+                opacity: 0;
+            }
+        }
+
+        &.active {
+            &.wrapper {
+                &::after {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .icon {
+        color: $gray-color;
+    }
+
+    .title {
+        font-size: rem(15);
+        font-weight: 700;
+        color: $gray-color;
+        transition: $transition;
+    }
+}

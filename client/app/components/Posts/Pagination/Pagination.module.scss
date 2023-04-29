@@ -1,0 +1,23 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.pagination {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    gap: 20px;
+
+    .btn {
+        background: transparent;
+        border: $border;
+        border-radius: 8px;
+        font-size: rem(20);
+        padding: 10px 15px;
+
+        &:hover {
+            color: $text-color;
+            border: 1px solid $text-color;
+            background: transparent;
+        }
+    }
+}

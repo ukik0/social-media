@@ -1,0 +1,43 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.user {
+    width: 100%;
+    background: rgba(#fff, 0.02);
+    border: $border;
+    box-shadow: 1px 1px 15px 5px rgba($bg-opacity-color, 0.03);
+    border-radius: 8px;
+    padding: 15px;
+    position: relative;
+    flex: 1 0 30%;
+    margin-top: 40px;
+
+    .title{
+        margin-top: 25px;
+    }
+
+    .top {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        position: relative;
+        border-bottom: $border;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+
+        img {
+            max-width: 50px;
+            height: 50px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .info {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+}

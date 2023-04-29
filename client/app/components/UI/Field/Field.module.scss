@@ -1,0 +1,32 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-weight: 500;
+    width: 100%;
+}
+
+.input {
+    background: $bg-opacity-color;
+    border: 2px solid $bg-opacity-color;
+    padding: 10px 15px;
+    border-radius: 8px;
+    outline: none;
+    width: 100%;
+    color: $text-color;
+    font-weight: 700;
+    font-size: rem(15);
+    transition: $transition;
+
+    &::placeholder {
+        font-weight: 700;
+        font-size: rem(14);
+    }
+
+    &:hover {
+        background: $bg-color;
+    }
+}

@@ -1,0 +1,9 @@
+.home {
+    &__content {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 40px;
+        margin-top: 70px;
+    }
+}

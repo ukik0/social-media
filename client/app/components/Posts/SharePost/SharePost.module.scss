@@ -1,0 +1,50 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.copy {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    color: $gray-color;
+    font-size: rem(18);
+    transition: $transition;
+    cursor: pointer;
+    transform: scale(1);
+
+    &.active {
+        cursor: not-allowed;
+        color: $black-color;
+        transform: scale(0);
+    }
+
+    &:hover {
+        color: $text-color;
+    }
+}
+
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+.spinner:after {
+    content: ' ';
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid $gray-color;
+    border-color: $gray-color $gray-color $gray-color transparent;
+    animation: spinner 1s linear infinite;
+}
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

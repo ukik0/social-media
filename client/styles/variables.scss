@@ -1,0 +1,16 @@
+/* text */
+$text-color: #f3f3f3;
+$white-color: #fff;
+$black-color: #000;
+$gray-color: #757575;
+$white-opacity-color: rgba(255, 255, 255, 0.5);
+
+/* background */
+$bg-color: rgb(20, 20, 20);
+$bg-opacity-color: rgba(255, 255, 255, 0.1);
+
+/* other */
+$index: calc(1vw + 1vh);
+$transition: 0.3s all cubic-bezier(0.79, 0.045, 0.16, 0.96);
+$border: 1px solid rgba(255, 255, 255, 0.1);
+$spinner-color: #fff;

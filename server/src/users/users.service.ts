@@ -4,6 +4,7 @@ import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
 import { Post, PostDocument } from '../posts/schemas/post.schema';
+import {shuffleArray} from "../utils/shuffleArray";
 
 @Injectable()
 export class UsersService {
@@ -12,22 +13,25 @@ export class UsersService {
         @InjectModel(Post.name) private postDocumentModel: Model<PostDocument>
     ) {}
 
-    async create(dto: UserDto): Promise<User> {
-        const user = await this.userDocumentModel.create({ ...dto });
 
-        return user;
-    }
+    async getUsers(): Promise<User[]> {
+        const users = await this.userDocumentModel.find();
 
-    async findAll(): Promise<User[]> {
-        return this.userDocumentModel.find().exec();
+        return shuffleArray(users)
     }
 
     async findById(id: string): Promise<User> {
-        return this.userDocumentModel.findById(id);
+        return this.userDocumentModel.findById(id).populate(['subscribers', 'followers']);
     }
 
     async findByUsername(name: string): Promise<User> {
         return this.userDocumentModel.findOne({ name }).exec();
+    }
+
+    async create(dto: UserDto): Promise<User> {
+        const user = await this.userDocumentModel.create({ ...dto });
+
+        return user;
     }
 
     async update(id: string, dto: UserDto): Promise<User> {
@@ -36,12 +40,8 @@ export class UsersService {
             .exec();
     }
 
-    async remove(id: string): Promise<User> {
-        return this.userDocumentModel.findByIdAndDelete(id).exec();
-    }
-
-    async getUserPosts(userId: string): Promise<Post[]> {
-        const posts = await this.postDocumentModel.find({ author: userId });
+    async getUserPosts(userId: string, sortBy: keyof Post, sortValue: 1 | -1): Promise<Post[]> {
+        const posts = await this.postDocumentModel.find({ author: userId }).populate('author').sort({ [sortBy]: sortValue });
 
         return posts;
     }
@@ -54,81 +54,61 @@ export class UsersService {
         return users;
     }
 
-    async addUserToFriend(userId, friendUserId): Promise<User> {
-        const user = await this.userDocumentModel.findById(userId);
-        const friendUser = await this.userDocumentModel.findById(friendUserId);
-
-        if (!user || !friendUser)
-            throw new BadRequestException('Пользователь не найден');
-
-        const updatedUser = await this.userDocumentModel.findByIdAndUpdate(
-            userId,
-            {
-                $push: { friends: friendUser }
-            },
-            { new: true }
-        );
-
-        const updatedFriendUser =
-            await this.userDocumentModel.findByIdAndUpdate(
-                friendUserId,
-                {
-                    $push: { friends: user }
-                },
-                { new: true }
-            );
-
-        return updatedUser;
-    }
-
-    async removeUserFromFriend(userId, friendUserId): Promise<User> {
-        const user = await this.userDocumentModel.findById(userId);
-        const friendUser = await this.userDocumentModel.findById(friendUserId);
-
-        if (!user || !friendUser)
-            throw new BadRequestException('Пользователь не найден');
-
-        const updatedUser = await this.userDocumentModel.findByIdAndUpdate(
-            userId,
-            {
-                $pull: { friends: friendUser._id }
-            },
-            { new: true }
-        );
-
-        const updatedFriendUser =
-            await this.userDocumentModel.findByIdAndUpdate(
-                friendUserId,
-                {
-                    $pull: { friends: user._id }
-                },
-                { new: true }
-            );
-
-        return updatedUser;
-    }
-
-    async getUserFriends(userId): Promise<User[]> {
+    async getPostsFromFollowers(userId): Promise<Post[]> {
         const user = await this.userDocumentModel.findById(userId);
 
         if (!user) throw new BadRequestException('Пользователь не найден');
 
-        const userFriends = await Promise.all(
-            user.friends.map((friend) =>
-                this.userDocumentModel.findById(friend)
-            )
-        );
-
-        return userFriends;
-    }
-
-    async getPostsFromFriends(userId): Promise<any> {
-        const user = await this.userDocumentModel.findById(userId);
-
-        if (!user) throw new BadRequestException('Пользователь не найден');
-
-        const posts = await Promise.all(user.friends.map((friend) => this.postDocumentModel.find({author: friend})))
+        const posts = await Promise.all(user.followers.map((follower) => this.postDocumentModel.find({author: follower}).populate('author')))
 
         return posts.flat();
     }
+
+    async subscription(userId: string, subscriberId: string): Promise<User> {
+        const user = await this.userDocumentModel.findById(userId)
+        const subscriber = await this.userDocumentModel.findById(subscriberId)
+
+        if (!user || !subscriber) throw new BadRequestException('Ошибка при подписке на пользователя :(')
+
+        await this.userDocumentModel.findByIdAndUpdate(subscriberId, {
+            $push: {subscribers: user._id}
+        })
+
+        await this.userDocumentModel.findByIdAndUpdate(userId, {
+            $push: {followers: subscriber._id}
+        })
+
+        return user
+    }
+
+    async unsubscribe(userId: string, subscriberId: string): Promise<User> {
+        const user = await this.userDocumentModel.findById(userId)
+        const subscriber = await this.userDocumentModel.findById(subscriberId)
+
+        if (!user || !subscriber) throw new BadRequestException('Ошибка при подписке на пользователя :(')
+
+        await this.userDocumentModel.findByIdAndUpdate(userId, {
+            $pull: {followers: subscriber._id}
+        })
+
+        await this.userDocumentModel.findByIdAndUpdate(subscriberId, {
+            $pull: {subscribers: user._id}
+        })
+
+        return user
+    }
+
+    async getUserFollowers(userId: string): Promise<User[]> {
+        const user = await this.userDocumentModel.findById(userId)
+
+        if (!user) throw new BadRequestException('Пользователь не найден')
+
+        const followers = await Promise.all(user.followers.map((follower) => this.userDocumentModel.findById(follower)))
+
+        return followers
+    }
+
+
+
+
 }

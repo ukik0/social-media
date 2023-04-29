@@ -1,0 +1,47 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.sorting {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .item {
+        font-size: rem(16);
+        font-weight: 500;
+        cursor: pointer;
+        color: $text-color;
+        position: relative;
+        transition: $transition;
+
+        &.active {
+            opacity: 0.7;
+
+            &.item {
+                &::after {
+                    width: 50%;
+                }
+            }
+        }
+
+        &::after {
+            transition: $transition;
+            @include pseudo {
+                bottom: -5px;
+                left: 0;
+                height: 2px;
+                width: 0;
+                background: $gray-color;
+                z-index: 5;
+            }
+        }
+
+        &:hover {
+            &::after {
+                width: 50%;
+            }
+
+            opacity: 0.7;
+        }
+    }
+}
