@@ -1,0 +1,83 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.ce-block--selected .ce-block__content,
+.ce-inline-toolbar,
+.codex-editor--narrow .ce-toolbox,
+.ce-conversion-toolbar,
+.ce-settings,
+.ce-settings__button,
+.ce-toolbar__settings-btn,
+.cdx-button,
+.ce-popover,
+.ce-toolbar__plus:hover {
+    background: $bg-color;
+    color: $white-opacity-color;
+    border: $border;
+}
+
+.ce-inline-tool,
+.ce-conversion-toolbar__label,
+.ce-toolbox__button,
+.cdx-settings-button,
+.ce-toolbar__plus {
+    color: inherit;
+}
+
+.ce-popover__item:hover{
+    background: $bg-opacity-color !important;
+}
+
+.ce-popover__item-icon,
+.ce-conversion-tool__icon {
+    background: $bg-color;
+    box-shadow: none;
+}
+
+.cdx-search-field {
+    border: $border;
+    background: $bg-color;
+    color: $black-color;
+}
+
+::selection {
+    background: $bg-color;
+}
+
+.cdx-settings-button:hover,
+.ce-settings__button:hover,
+.ce-toolbox__button--active,
+.ce-toolbox__button:hover,
+.cdx-button:hover,
+.ce-inline-toolbar__dropdown:hover,
+.ce-inline-tool:hover,
+.ce-popover__item:hover,
+.ce-conversion-tool:hover,
+.ce-toolbar__settings-btn:hover {
+    background: $bg-color;
+    color: $text-color;
+}
+
+.cdx-notify--error {
+    background: $bg-opacity-color !important;
+}
+
+.cdx-notify__cross::after,
+.cdx-notify__cross::before {
+    background: $black-color;
+}
+
+.cdx-search-field__input, .cdx-search-field__input::placeholder{
+    color: $text-color !important;
+}
+
+.Create_editor__6_iO9{
+    border: $border;
+}
+
+::selection {
+    background: $bg-opacity-color;
+}
+::-moz-selection {
+    background: $bg-opacity-color;
+}

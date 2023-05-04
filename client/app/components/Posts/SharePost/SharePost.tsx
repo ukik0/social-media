@@ -1,8 +1,11 @@
-import { ROUTES } from '@/utils';
 import { FC, useCallback, useState } from 'react';
+import { BsFillBookmarkHeartFill, BsFillShareFill } from 'react-icons/bs';
+
+import { Button, Typography } from '@/components';
+
+import { ROUTES } from '@/utils';
+
 import cl from './SharePost.module.scss';
-import {Button, Typography} from '@/components';
-import {BsFillBookmarkHeartFill, BsFillShareFill} from "react-icons/bs";
 
 interface SharePostProps {
     postId: Post['_id'];
@@ -18,15 +21,11 @@ export const SharePost: FC<SharePostProps> = ({ postId }) => {
         setTimeout(() => {
             setIsCopy(false);
         }, 1500);
-
     }, []);
 
     return (
         <div className={cl.copy}>
-            <BsFillShareFill
-                onClick={handleCopyClick}
-                className={cl.icon}
-            />
+            <BsFillShareFill onClick={handleCopyClick} className={cl.icon} />
 
             <Typography variant={'sub-title-1'} tag={'p'}>
                 {isCopy ? 'Скопировано' : 'Скопировать'}

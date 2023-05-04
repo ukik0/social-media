@@ -6,7 +6,7 @@ import { Layout, Loader, PostsComponents } from '@/components';
 
 import { POSTS_SORTING_LIST } from '@/utils';
 
-import {useProfilePage, UserProfile} from "@/app/pages/Profile";
+import { UserProfile, useProfilePage } from '@/app/pages/Profile';
 
 import cl from './ProfilePage.module.scss';
 

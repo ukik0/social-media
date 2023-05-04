@@ -1,9 +1,10 @@
 import { Typography } from '@/app/components';
 
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { BiExit } from 'react-icons/bi';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { useAuth } from '@/store';
 
@@ -16,7 +17,13 @@ interface UserProps {
 }
 
 export const User: FC<UserProps> = ({ user }) => {
+    const router = useRouter();
     const { logout } = useAuth();
+
+    const handleLogout = async () => {
+        await logout();
+        router.push(ROUTES.LOGIN);
+    };
 
     return (
         <div className={cl.user}>
@@ -35,7 +42,7 @@ export const User: FC<UserProps> = ({ user }) => {
                 </Typography>
             </div>
 
-            <BiExit className={cl.icon} onClick={() => logout()} />
+            <BiExit className={cl.icon} onClick={handleLogout} />
         </div>
     );
 };

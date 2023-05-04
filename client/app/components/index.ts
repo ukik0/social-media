@@ -6,4 +6,3 @@ export * from './Users/index';
 export * from './Comments/index';
 export * from './UI/index';
 export * from './Layout/Request/RequestLayout';
-export * from './Typography/index';

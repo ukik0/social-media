@@ -10,9 +10,8 @@ export const useFavourites = (postId: Post['_id']) => {
     const isAuth = useAuthStore((state) => state.isAuth);
 
     const { data: favouritesPosts, isLoading: dataIsLoading } = useGetFavouritesPosts();
-    const { mutate: addPostToFavourite, isLoading: isAddFavouriteLoading } = useAddPostToFavouritesMutation(
-        postId
-    );
+    const { mutate: addPostToFavourite, isLoading: isAddFavouriteLoading } =
+        useAddPostToFavouritesMutation(postId);
     const { mutate: removePostFromFavourite, isLoading: isRemoveFavouriteLoading } =
         useRemovePostFromFavouritesMutation(postId);
 

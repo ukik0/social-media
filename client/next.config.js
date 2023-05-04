@@ -2,9 +2,9 @@
 const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
-    domains: [
-       "rare-gallery.com"
-    ],
+    images: {
+        domains: ['rare-gallery.com', 'localhost']
+    }
 };
 
 module.exports = nextConfig;

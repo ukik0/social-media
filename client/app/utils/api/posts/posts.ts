@@ -26,6 +26,6 @@ export const postsApi = {
         return api.get<Post[]>(`posts/search`, { params: { query } });
     },
     async removePost({ id }: { id: string }) {
-        return api.delete<Post>(`posts/${id}`, );
+        return api.delete<Post>(`posts/${id}`);
     }
 };

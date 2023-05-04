@@ -1,6 +1,6 @@
-import { RequestLayout } from './Request/RequestLayout';
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
+import { RequestLayout } from './Request/RequestLayout';
 
 export * from './Header/BurgerMenu/BurgerMenu';
 export * from './Header/Search/Search';

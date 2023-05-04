@@ -1,5 +1,6 @@
 import '@/styles/globals.scss';
 import NextNProgress from 'nextjs-progressbar';
+import 'styles/editor.scss';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -12,13 +13,9 @@ import { RequestLayout } from '@/components';
 
 import { PaginationPostState } from '@/context';
 
-import { AuthFieldsComponents, AuthProvider } from '@/provider';
-
 const montserrat = Montserrat({ subsets: ['latin'] });
 
-type AppTypeProps = AppProps & AuthFieldsComponents;
-
-const MyApp = ({ Component, pageProps }: AppTypeProps) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
     const [queryClient] = useState(
         () =>
             new QueryClient({
@@ -48,25 +45,23 @@ const MyApp = ({ Component, pageProps }: AppTypeProps) => {
             />
             <QueryClientProvider client={queryClient}>
                 <RequestLayout>
-                    <AuthProvider Component={Component}>
-                        <PaginationPostState>
-                            <Component {...pageProps} className={montserrat.className} />
-                            <Toaster
-                                position='top-center'
-                                reverseOrder={true}
-                                toastOptions={{
-                                    icon: '🔥',
-                                    style: {
-                                        borderRadius: '8px',
-                                        background: 'rgb(20, 20, 20)',
-                                        color: '#f3f3f3',
-                                        border: '1px solid rgba(255, 255, 255, 0.1)'
-                                    },
-                                    duration: 1000 * 3.5
-                                }}
-                            />
-                        </PaginationPostState>
-                    </AuthProvider>
+                    <PaginationPostState>
+                        <Component {...pageProps} className={montserrat.className} />
+                        <Toaster
+                            position='top-center'
+                            reverseOrder={true}
+                            toastOptions={{
+                                icon: '🔥',
+                                style: {
+                                    borderRadius: '8px',
+                                    background: 'rgb(20, 20, 20)',
+                                    color: '#f3f3f3',
+                                    border: '1px solid rgba(255, 255, 255, 0.1)'
+                                },
+                                duration: 1000 * 3.5
+                            }}
+                        />
+                    </PaginationPostState>
                 </RequestLayout>
             </QueryClientProvider>
         </>

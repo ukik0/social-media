@@ -7,9 +7,9 @@ import { ROUTES } from '@/utils';
 import cl from './Auth.module.scss';
 
 export const Auth = () => {
-    const user = useAuthStore((state) => state.user)
-    const isLoading = useAuthStore((state) => state.isLoading)
-    const isAuth = useAuthStore((state) => state.isAuth)
+    const user = useAuthStore((state) => state.user);
+    const isLoading = useAuthStore((state) => state.isLoading);
+    const isAuth = useAuthStore((state) => state.isAuth);
 
     //TODO: loader
     if (isLoading)

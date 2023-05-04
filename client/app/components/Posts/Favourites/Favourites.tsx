@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { BsFillBookmarkHeartFill, BsFillBookmarkXFill } from 'react-icons/bs';
 
+import { Typography } from '@/components';
+
 import { useFavourites } from '@/app/components/Posts/Favourites/hooks/useFavourites';
 
 import cl from './Favourites.module.scss';
-import { Typography } from '@/components';
 
 interface FavouritesProps {
     postId: Post['_id'];
@@ -12,13 +13,12 @@ interface FavouritesProps {
 
 export const Favourites: FC<FavouritesProps> = ({ postId }) => {
     const { mutations, isLoading, favouritesPosts, isAuth } = useFavourites(postId);
-    console.log(favouritesPosts)
 
     if (!isAuth) return null;
 
     if (isLoading || !favouritesPosts) return <div className={cl.spinner}></div>;
 
-    const isFavouritePost = !!favouritesPosts.find((item) => item._id === postId);
+    const isFavouritePost = !!favouritesPosts.find((item) => item?._id === postId);
 
     return (
         <>

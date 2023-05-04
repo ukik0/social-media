@@ -14,3 +14,5 @@ export * from './comments/hooks/index';
 
 export * from './favoruites/favourites';
 export * from './favoruites/hooks/index';
+
+export * from './media/media';

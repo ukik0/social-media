@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button, Field, Typography } from '@/components';
 
@@ -16,6 +17,7 @@ import cl from './LoginPage.module.scss';
 
 export const LoginPage = () => {
     const login = useAuthStore((state) => state.login);
+    const router = useRouter();
 
     const {
         register,
@@ -24,9 +26,10 @@ export const LoginPage = () => {
         reset
     } = useForm<LoginValidationSchemaType>({ resolver: zodResolver(LoginValidationSchema), mode: 'all' });
 
-    const onSubmit: SubmitHandler<LoginValidationSchemaType> = (data) => {
-        login(data.name, data.password);
+    const onSubmit: SubmitHandler<LoginValidationSchemaType> = async (data) => {
+        await login(data.name, data.password);
         reset();
+        router.push(ROUTES.ROOT);
     };
 
     return (

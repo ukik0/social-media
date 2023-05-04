@@ -8,9 +8,10 @@ import cl from './Button.module.scss';
 interface ButtonProps extends ReactTagProps<'button'> {
     variant?: 'outlined' | 'contained' | 'text';
     children?: string | null;
-    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    onClick?: (...args: any) => void;
     className?: string;
     Icon?: IconType;
+    fill?: boolean;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ export const Button: FC<ButtonProps> = ({
     className,
     Icon,
     variant = 'outlined',
+    fill,
     ...rest
 }) => {
     return (
@@ -26,7 +28,8 @@ export const Button: FC<ButtonProps> = ({
             className={cn(cl.btn, className, {
                 [cl.outlined]: variant === 'outlined',
                 [cl.contained]: variant === 'contained',
-                [cl.text]: variant === 'text'
+                [cl.text]: variant === 'text',
+                [cl.fill]: fill
             })}
             onClick={onClick}
             {...rest}

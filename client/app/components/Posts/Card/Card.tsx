@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { AiOutlineComment, AiOutlineEye } from 'react-icons/ai';
+import { BsThreeDots } from 'react-icons/bs';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -11,7 +12,6 @@ import { ROUTES, timeFromNow, useOutside } from '@/utils';
 import cn from 'classnames';
 
 import cl from './Card.module.scss';
-import { BsThreeDots } from 'react-icons/bs';
 
 interface CardProps {
     post: Post;
@@ -53,8 +53,8 @@ export const Card: FC<CardProps> = ({ post }) => {
                     })}
                 >
                     <PostsComponents.Favourites postId={post._id} />
-                    <PostsComponents.SharePost postId={post._id}/>
-                    <PostsComponents.RemovePost post={post}/>
+                    <PostsComponents.SharePost postId={post._id} />
+                    <PostsComponents.RemovePost post={post} />
                 </div>
             </div>
 

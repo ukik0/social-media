@@ -1,11 +1,19 @@
+import { useEffect } from 'react';
 import { GoSearch } from 'react-icons/go';
+
+import { useRouter } from 'next/router';
 
 import { Result, useSearch } from '@/components';
 
 import cl from './Search.module.scss';
 
 export const Search = () => {
+    const { events } = useRouter();
     const { posts, searchValue, setSearchValue, isSuccess } = useSearch();
+
+    useEffect(() => {
+        events.on('routeChangeComplete', () => setSearchValue(''));
+    }, [events]);
 
     return (
         <div className={cl.wrapper}>

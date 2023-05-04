@@ -1,12 +1,13 @@
 import { Layout } from '@/components';
+
 import { FollowersPostsPage } from '@/pages';
 
 const FollowersPosts = () => {
     return (
         <Layout title={'Посты друзей'}>
-            <FollowersPostsPage/>
+            <FollowersPostsPage />
         </Layout>
-    )
-}
+    );
+};
 
-export default FollowersPosts
+export default FollowersPosts;
