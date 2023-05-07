@@ -1,3 +1,4 @@
+
 type ReactTagProps<T> = import('react').ComponentPropsWithRef<T>;
 
 interface Comment {
@@ -55,4 +56,12 @@ interface AuthResponse {
 
 interface LogoutResponse extends User {
     refreshToken: null;
+}
+
+interface CreatePostData {
+    title: string
+    description: JSON
+    imageUrl: string
+    tags: string[]
+    category: string
 }

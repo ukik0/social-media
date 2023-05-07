@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { Button, Field, Typography } from '@/components';
 
 import { ROUTES } from '@/utils/constants';
-import { RegisterValidationSchema, RegisterValidationSchemaType } from '@/utils/constants/validation';
+import { RegisterValidationSchema, RegisterValidationSchemaType } from '@/utils/validation';
 
 import cl from './RegisterPage.module.scss';
 

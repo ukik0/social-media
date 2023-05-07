@@ -1,13 +1,17 @@
-import { FC } from 'react';
+import EditorJS, { OutputData } from '@editorjs/editorjs';
+
+import { FC, useCallback, useEffect, useRef } from 'react';
 import { AiOutlineComment, AiOutlineEye } from 'react-icons/ai';
 import { BsThreeDots } from 'react-icons/bs';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { PostsComponents, Typography } from '@/components';
+import { Editor, PostsComponents, Typography } from '@/components';
 
 import { ROUTES, timeFromNow, useOutside } from '@/utils';
+import { useMounted } from '@/utils/hooks/useMounted';
+import { CreatePostSchema } from '@/utils/validation/createPostData';
 
 import cn from 'classnames';
 
@@ -19,8 +23,8 @@ interface CardProps {
 
 export const Card: FC<CardProps> = ({ post }) => {
     const { asPath } = useRouter();
-
     const { ref, isShow, setIsShow } = useOutside(false);
+    const editorRef = useRef<EditorJS>();
 
     const isPostPage = asPath.split('/').includes('post');
 
@@ -66,13 +70,7 @@ export const Card: FC<CardProps> = ({ post }) => {
                 {post.title}
             </Link>
 
-            <Typography
-                tag={'p'}
-                variant={'description'}
-                className={cn(cl.description, { [cl.active]: isPostPage })}
-            >
-                {post.description}
-            </Typography>
+            {isPostPage && <Editor id={'EditorCard'} readOnly ref={editorRef} className={cl.editor} post={post}/>}
 
             <div className={cl.category}>
                 Категория:

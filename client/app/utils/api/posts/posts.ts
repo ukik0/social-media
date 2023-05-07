@@ -10,6 +10,8 @@ interface FilteredPostsProps {
     end: DateObject;
 }
 
+
+
 export const postsApi = {
     async getPosts({ start, end }: { start: string; end: string }) {
         return api.get<PostResponse<Post[]>>(`posts?start=${start}&end=${end}`);
@@ -27,5 +29,8 @@ export const postsApi = {
     },
     async removePost({ id }: { id: string }) {
         return api.delete<Post>(`posts/${id}`);
-    }
+    },
+    async createPost(data: CreatePostData) {
+        return api.post<Post>(`posts`, data);
+    },
 };

@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { Button, Field, Typography } from '@/components';
 
 import { ROUTES } from '@/utils/constants';
-import { LoginValidationSchema, LoginValidationSchemaType } from '@/utils/constants/validation';
+import { LoginValidationSchema, LoginValidationSchemaType } from '@/utils/validation';
 
 import cl from './LoginPage.module.scss';
 
