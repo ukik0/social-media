@@ -5,3 +5,4 @@ export * from './Favourites/FavouritesPage';
 export * from './Register/RegisterPage';
 export * from './Login/LoginPage';
 export * from './Friends/Posts/FriendsPostsPage';
+export * from './Privacy/PrivacyPage';

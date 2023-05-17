@@ -131,7 +131,7 @@ export const Create = () => {
                         </>
                     )}
 
-                    <Editor id={'EditorCreate'} ref={editorRef} className={cl.editor}/>
+                    <Editor id={'EditorCreate'} ref={editorRef} className={cl.editor} />
 
                     <Field
                         label={'Название поста:'}

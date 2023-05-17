@@ -6,7 +6,7 @@ interface ApiLayoutProps {
     children: ReactNode;
 }
 
-export const RequestLayout: FC<ApiLayoutProps> = ({ children }) => {
+export const SessionChecker: FC<ApiLayoutProps> = ({ children }) => {
     const { checkAuth } = useAuth();
 
     useEffect(() => {

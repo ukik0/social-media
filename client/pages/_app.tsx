@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import { Montserrat } from '@next/font/google';
 import { AppProps } from 'next/app';
 
-import { RequestLayout } from '@/components';
+import { SessionChecker } from '@/components';
 
 import { PaginationPostState } from '@/context';
 
@@ -44,7 +44,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                 options={{ showSpinner: false, trickle: true }}
             />
             <QueryClientProvider client={queryClient}>
-                <RequestLayout>
+                <SessionChecker>
                     <PaginationPostState>
                         <Component {...pageProps} className={montserrat.className} />
                         <Toaster
@@ -62,7 +62,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                             }}
                         />
                     </PaginationPostState>
-                </RequestLayout>
+                </SessionChecker>
             </QueryClientProvider>
         </>
     );

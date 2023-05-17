@@ -5,5 +5,5 @@ export * from './Posts/index';
 export * from './Users/index';
 export * from './Comments/index';
 export * from './UI/index';
-export * from './Layout/Request/RequestLayout';
+export * from './Layout/Session/SessionChecker';
 export * from './Editor/Editor';

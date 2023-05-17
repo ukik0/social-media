@@ -1,6 +1,6 @@
-import EditorJS, {OutputData} from '@editorjs/editorjs';
+import EditorJS, { OutputData } from '@editorjs/editorjs';
 
-import {forwardRef, MutableRefObject, useCallback, useEffect, useRef} from 'react';
+import { MutableRefObject, forwardRef, useCallback, useEffect, useRef } from 'react';
 
 import { useMounted } from '@/utils/hooks/useMounted';
 
@@ -8,12 +8,12 @@ import cl from './Editor.module.scss';
 
 interface EditorProps {
     className?: string;
-    post?: Post
-    readOnly?: boolean
-    id: string
+    post?: Post;
+    readOnly?: boolean;
+    id: string;
 }
 
-export const Editor = forwardRef<any, EditorProps>(({id, className, readOnly = false, post }, ref) => {
+export const Editor = forwardRef<any, EditorProps>(({ id, className, readOnly = false, post }, ref) => {
     const isMounted = useMounted();
 
     const initializeEditor = useCallback(async () => {
@@ -35,7 +35,7 @@ export const Editor = forwardRef<any, EditorProps>(({id, className, readOnly = f
                 placeholder: 'Печатайте тут, что бы написать пост...',
                 inlineToolbar: !readOnly,
                 readOnly: readOnly,
-                data: post ? post.description as unknown as OutputData : undefined,
+                data: post ? (post.description as unknown as OutputData) : undefined,
                 tools: {
                     header: Header,
                     linkTool: LinkTool,

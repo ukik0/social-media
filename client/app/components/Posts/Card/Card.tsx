@@ -4,6 +4,7 @@ import { FC, useCallback, useEffect, useRef } from 'react';
 import { AiOutlineComment, AiOutlineEye } from 'react-icons/ai';
 import { BsThreeDots } from 'react-icons/bs';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -27,7 +28,7 @@ export const Card: FC<CardProps> = ({ post }) => {
     const editorRef = useRef<EditorJS>();
 
     const isPostPage = asPath.split('/').includes('post');
-
+    console.log(post.imageUrl);
     return (
         <li className={cl.item}>
             <div className={cl.top}>
@@ -63,14 +64,22 @@ export const Card: FC<CardProps> = ({ post }) => {
             </div>
 
             <div className={cl.banner}>
-                <img src='https://rare-gallery.com/uploads/posts/529054-flowers-red.jpg' alt='img' />
+                <Image
+                    src={`${process.env.NEXT_PUBLIC_URL}${post.imageUrl}`}
+                    alt={post.title}
+                    width={300}
+                    height={300}
+                    priority
+                />
             </div>
 
             <Link href={`${ROUTES.POST_PAGE}/${post._id}`} className={cl.title}>
                 {post.title}
             </Link>
 
-            {isPostPage && <Editor id={'EditorCard'} readOnly ref={editorRef} className={cl.editor} post={post}/>}
+            {isPostPage && (
+                <Editor id={'EditorCard'} readOnly ref={editorRef} className={cl.editor} post={post} />
+            )}
 
             <div className={cl.category}>
                 Категория:

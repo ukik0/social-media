@@ -24,8 +24,9 @@
             "@/store": ["./app/store"],
             "@/context": ["./app/context"],
             "@/provider": ["./app/provider"],
+            "contentlayer/generated": ["./.contentlayer/generated"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".contentlayer/generated"],
     "exclude": ["node_modules"]
 }

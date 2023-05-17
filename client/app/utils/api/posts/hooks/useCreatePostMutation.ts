@@ -1,8 +1,10 @@
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {postsApi} from "@/utils/api";
-import {timeoutPromise} from "@/utils";
-import toast from "react-hot-toast";
-import {AxiosError} from "axios";
+import { AxiosError } from 'axios';
+
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
+import { timeoutPromise } from '@/utils';
+import { postsApi } from '@/utils/api';
 
 export const useCreatePostMutation = (data?: CreatePostData) => {
     const client = useQueryClient();

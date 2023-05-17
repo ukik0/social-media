@@ -1,0 +1,17 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.h1 {
+    color: $text-color;
+    font-size: 30px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.p {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 135%;
+    color: $gray-color;
+    margin-bottom: 5px;
+}

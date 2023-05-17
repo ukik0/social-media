@@ -1,6 +1,6 @@
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
-import { RequestLayout } from './Request/RequestLayout';
+import { SessionChecker } from './Session/SessionChecker';
 
 export * from './Header/BurgerMenu/BurgerMenu';
 export * from './Header/Search/Search';
@@ -12,5 +12,5 @@ export * from './Header/Search/useSearch';
 export const Layouts = {
     Header,
     Footer,
-    RequestLayout
+    SessionChecker
 };
